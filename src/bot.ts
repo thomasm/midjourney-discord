@@ -25,7 +25,7 @@ export class MidjourneyBot extends Midjourney {
   public config: BotConfig;
 
   constructor(defaults: BotConfigParam) {
-    const { DavinciToken, SalaiToken, ChannelId, ServerId } = defaults;
+    const { DavinciToken, SalaiToken, ChannelId, ServerId, BotCommand } = defaults;
     super(defaults);
     this.config = {
       ...DefaultBotConfig,
@@ -42,7 +42,7 @@ export class MidjourneyBot extends Midjourney {
   }
   async onInteraction(interaction: Interaction<CacheType>) {
     if (!interaction.isChatInputCommand()) return;
-    if (interaction.commandName === "oh_imagine") {
+    if (interaction.commandName === this.config.BotCommand + "oh_imagine") {
       this.ImagineCmd(interaction);
     }
   }
@@ -66,7 +66,7 @@ export class MidjourneyBot extends Midjourney {
 
   async onReady() {
     await this.client.application?.commands.create({
-      name: "oh_imagine",
+      name: this.config.BotCommand + "oh_imagine",
       description: "This command is a wrapper of MidJourneyAI",
       options: [
         {
