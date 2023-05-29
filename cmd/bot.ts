@@ -2,18 +2,18 @@ import "dotenv/config";
 import { MidjourneyBot } from "../src/index";
 
 async function main() {
-  const clients = [
-    {
-      DavinciToken: <string>process.env.DAVINCI_TOKEN_1,
-      ChannelId: <string>process.env.CHANNEL_ID_1,
-      BotCommand: <string>process.env.BOT_COMMAND_1,
-    },
-    {
-      DavinciToken: <string>process.env.DAVINCI_TOKEN_2,
-      ChannelId: <string>process.env.CHANNEL_ID_2,
-      BotCommand: <string>process.env.BOT_COMMAND_2,
+  const totalClients = 14;
+
+  const clients = Array.from({ length: totalClients }, (_, i) => {
+    const index = i + 1;
+    
+    return {
+      DavinciToken: String(process.env[`DAVINCI_TOKEN_${index}`]),
+      ChannelId: String(process.env[`CHANNEL_ID_${index}`]),
+      BotCommand: String(process.env[`BOT_COMMAND_${index}`]),
     }
-  ];
+  });
+
 
   for (const config of clients) {
     const client = new MidjourneyBot({
